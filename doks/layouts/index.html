@@ -1,0 +1,84 @@
+{{ define "main" }}
+<section class="section container-fluid mt-n3 pb-3">
+  <div class="row justify-content-center">
+    <div class="col-lg-12 text-center">
+      <h1 class="mt-0">{{ .Title }}</h1>
+    </div>
+    <div class="col-lg-9 col-xl-8 text-center">
+      <p class="lead">{{ .Params.lead | safeHTML }}</p>
+    </div>
+  </div>
+</section>
+{{ end }} {{ define "sidebar-prefooter" }}
+<section class="section section-sm">
+  <div class="container">
+    <div class="row justify-content-center text-center">
+      <div
+        onclick="location.href = 'documentacao/autenticacao'"
+        onmouseover="this.style.boxShadow='rgb(0 0 0 / 90%) 0px 5px 10px'"
+        onmouseleave="this.style.boxShadow='rgb(0 0 0 / 0%) 0px 5px 10px'"
+        class="col-lg-5"
+        style="
+          border: 2px solid #615a5a;
+          padding: 24px 16px;
+          cursor: pointer;
+          border-radius: 4px;
+          margin-right: 16px;
+        "
+      >
+        <img src="logo-auth0.png" width="90" />
+        <h2 class="h4">Auth0</h2>
+        <p>
+          Entenda a diferença de autorização e autenticação, funcionalidades do
+          Auth0, entre outras coisas
+        </p>
+      </div>
+      <div
+        onclick="location.href = 'auth0/documentacao/introducao'"
+        onmouseover="this.style.boxShadow='rgb(0 0 0 / 90%) 0px 5px 10px'"
+        onmouseleave="this.style.boxShadow='rgb(0 0 0 / 0%) 0px 5px 10px'"
+        class="col-lg-5"
+        style="
+          border: 2px solid #615a5a;
+          padding: 24px 16px;
+          cursor: pointer;
+          border-radius: 4px;
+          margin-right: 16px;
+        "
+      >
+        <img src="frontend.png" width="100" />
+        <h2 class="h4">Aplicações</h2>
+        <p>
+          Tutorial de como implementar Auth0 em <b>Single-Page Aplications</b>
+          <span style="font-size: 16px; color: gray">(React)</span>
+        </p>
+      </div>
+      <div
+        onclick="location.href = 'auth0/documentacao/introducao'"
+        onmouseover="this.style.boxShadow='rgb(0 0 0 / 90%) 0px 5px 10px'"
+        onmouseleave="this.style.boxShadow='rgb(0 0 0 / 0%) 0px 5px 10px'"
+        class="col-lg-5"
+        style="
+          border: 2px solid #615a5a;
+          padding: 24px 16px;
+          cursor: pointer;
+          border-radius: 4px;
+        "
+      >
+        <img src="backend.png" width="100" />
+        <h2 class="h4">APIs</h2>
+        <p>
+          Tutorial de como implementar Auth0 em <b>APIs</b>
+          <span style="font-size: 16px; color: gray">(Node.js)</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+{{ end }} {{ define "sidebar-footer" }}
+<section class="section section-sm container-fluid">
+  <div class="row justify-content-center text-center">
+    <div class="col-lg-9">{{- .Content -}}</div>
+  </div>
+</section>
+{{ end }}
