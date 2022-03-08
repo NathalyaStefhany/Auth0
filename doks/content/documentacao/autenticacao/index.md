@@ -45,7 +45,7 @@ Para se obter um token de identidade, temos duas opções:
 
 - A aplicação informa ao Servidor OpenID a necessidade da geração e envio do ID token após a autenticação do usuário. Caso seja a primeira vez que o usuário acessa a aplicação, o provedor de autenticação irá solicitar o consentimento do usuário para enviar as informações após e, caso o usuário aceite, o token é enviado à aplicação
 
-- A aplicação solicita o token ao Servidor OpenID utilizando o [token de acesso](http://localhost:1313/documentacao/autorizacao/#token-de-acesso)
+- A aplicação solicita o token ao Servidor OpenID utilizando o [token de acesso](https://doks-auth0.netlify.app/documentacao/autorizacao/#token-de-acesso)
 
 ### Utilidade
 

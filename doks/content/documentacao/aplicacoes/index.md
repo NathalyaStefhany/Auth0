@@ -42,7 +42,7 @@ Nas configurações algumas informações são importantes para sua aplicação:
 
 ### Fluxo de Autenticação e Autorização
 
-Os fluxos de autenticação e autorização são métodos pelos quais os aplicativos podem obter o [token de acesso](http://localhost:1313/documentacao/autorizacao/#token-de-acesso) e o [ID token](http://localhost:1313/documentacao/autenticacao/#id-token).
+Os fluxos de autenticação e autorização são métodos pelos quais os aplicativos podem obter o [token de acesso](https://doks-auth0.netlify.app/documentacao/autorizacao/#token-de-acesso) e o [ID token](https://doks-auth0.netlify.app/documentacao/autenticacao/#id-token).
 
 #### Sem token de acesso
 
@@ -54,7 +54,7 @@ Se a aplicação não precisar de um token de acesso, podemos utilizar o **_Impl
    - `response_mode: form_post` -> garante a segurança
 3. O servidor do Auth0 redireciona o usuário para a tela de login e autorização
 4. O usuário se autentica usando uma das opções de login configuradas e consente as permissões necessárias
-5. O servidor do Auth0 redireciona o usuário de volta a aplicação com um [ID token](http://localhost:1313/documentacao/autenticacao/#id-token)
+5. O servidor do Auth0 redireciona o usuário de volta a aplicação com um [ID token](https://doks-auth0.netlify.app/documentacao/autenticacao/#id-token)
 
 #### Com token de acesso
 
@@ -68,7 +68,7 @@ Se a aplicação não precisar de um token de acesso, podemos utilizar o **_Auth
 6. O servidor de autorização do Auth0 armazena o _code_challenge_ e redireciona o usuário de volta para o aplicativo com um código de autorização
 7. O SDK do Auth0 envia o código e o _code_verifier_ para o servidor de autorização do Auth0 pelo endpoint `/oauth/token`
 8. O servidor verifica o _code_challenge_ e o _code_verifier_
-9. O servidor redireciona o usuário de volta a aplicação com um [ID token](http://localhost:1313/documentacao/autenticacao/#id-token) e um [token de acesso](http://localhost:1313/documentacao/autorizacao/#token-de-acessp)
+9. O servidor redireciona o usuário de volta a aplicação com um [ID token](https://doks-auth0.netlify.app/documentacao/autenticacao/#id-token) e um [token de acesso](https://doks-auth0.netlify.app/documentacao/autorizacao/#token-de-acessp)
 
 ## Aplicações Confidenciais e Públicas
 
