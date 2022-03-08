@@ -1,1 +1,2 @@
-canonifyURLs = false
+baseurl = "https://doks-auth0.com.br/"
+canonifyURLs = true
