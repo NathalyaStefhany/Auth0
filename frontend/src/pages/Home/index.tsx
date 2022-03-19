@@ -1,3 +1,9 @@
+import { Container } from "./styles";
+
 export const Home = () => {
-  return <p>Home</p>;
+  return (
+    <Container>
+      <h1>Bem Vindo a Book Store</h1>
+    </Container>
+  );
 };

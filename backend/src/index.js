@@ -28,8 +28,6 @@ app.use(jwtCheck);
 
 app.use(express.json());
 
-let books = [];
-
 const checkRole = (role) => {
   return (req, res, next) => {
     const token = req.headers.authorization;
@@ -47,6 +45,8 @@ const checkRole = (role) => {
 };
 
 const customScopeKey = "permissions";
+
+let books = [];
 
 app.get(
   "/book",
@@ -67,7 +67,7 @@ app.post("/book", checkRole("admin"), (request, response) => {
 
   books.push(book);
 
-  return response.status(201).json(book);
+  return response.status(201).send();
 });
 
 app.delete("/book/:id", (request, response) => {
@@ -80,7 +80,7 @@ app.delete("/book/:id", (request, response) => {
 
   books = books.filter((book) => book.id !== id);
 
-  return response.json(books);
+  return response.send();
 });
 
 app.listen(4000);

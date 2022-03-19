@@ -5,7 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { api } from "../../service/api";
 
 import { BooksProps } from "./types";
-import { Container } from "./styles";
+import { BookContainer, BookContent, Container } from "./styles";
 
 export const Books = () => {
   const [books, setBooks] = useState<BooksProps[] | []>([]);
@@ -35,6 +35,27 @@ export const Books = () => {
   return (
     <Container>
       <h1>Livros</h1>
+
+      <BookContainer>
+        {books.map((book) => (
+          <BookContent>
+            <p>
+              <b>ID: </b>
+              {book.id}
+            </p>
+
+            <p>
+              <b>Título: </b>
+              {book.title}
+            </p>
+
+            <p>
+              <b>Descrição: </b>
+              {book.description}
+            </p>
+          </BookContent>
+        ))}
+      </BookContainer>
     </Container>
   );
 };
