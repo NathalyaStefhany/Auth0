@@ -13,7 +13,7 @@ weight: 7
 
 ## Boas Práticas
 
-Ao solicitar os escopos, é necessário se certificar de que está solicitando apenas o que é necessário para que a aplicação funcione e que seja claramente especificado pois é mais provável que se obtenha o consentimento do usuário quando necessário.
+Ao solicitar os escopos para o usuário, é necessário se certificar de que está solicitando apenas o que é necessário para que a aplicação funcione e que seja claramente especificado, caso contrário, o usuário pode não consentir.
 
 Além disso, ao criar escopos personalizados para uma API, considere quais níveis de acesso a aplicação terá e projete os escopos de acordo.
 
@@ -28,8 +28,8 @@ Digamos que você esteja construindo uma API que fornece dados para um aplicativ
 Para fazer isso, você cria 4 escopos para a sua API:
 
 - `create: product` -> autoriza a criação dos produtos
-- `edit: product` -> autoriza a editação dos produtos
-- `delete: product` -> autoriza a deletação dos produtos
+- `edit: product` -> autoriza a edição dos produtos
+- `delete: product` -> autoriza a deleção dos produtos
 - `read: product` -> autoriza a visualização dos produtos
 
 Para o usuário administrador, foi atribuido os escopos `create: product`, `edit: product`, `delete: product` e `read: product`. Para o usuário cliente, foi atribuido o escopo `read: product`.
@@ -45,10 +45,10 @@ Definido os escopos de cada tipo de usuário, temos as seguintes etapas da aplic
 
 ## OpenID Connect
 
-Os escopos OpenID Connect (OIDC) são usados ​​pela aplicação durante a autenticação para autorizar o acesso aos detalhes de um usuário, como nome e data de nascimento. Depois que o usuário autoriza os escopos solicitados, as informações são retornadas em um ID Token e também ficam disponíveis por meio do endpoint `/userinfo`.
+Os escopos OpenID Connect (OIDC) são usados ​​pela aplicação durante a autenticação para autorizar o acesso aos detalhes de um usuário, como nome e data de nascimento. Depois que o usuário autoriza os escopos solicitados, as informações são retornadas em um ID Token e também ficam disponíveis por meio do endpoint [/userinfo](https://auth0.com/docs/api/authentication#user-profile) do Auth0.
 
 Exemplo:
 
 `scope: openid profile email`
 
-O _openid_ é obrigatório pois indica que a aplicação pretende usar o OIDC para verificar a identidade do usuário. O _profile_ retorna informações básicas de perfil como nome, apelido e foto. O _email_ retorna o email.
+O _openid_ no escopo é obrigatório pois indica que a aplicação pretende usar o OIDC para verificar a identidade do usuário. O _profile_ retorna informações básicas de perfil como nome, apelido e foto. O _email_ retorna o email.

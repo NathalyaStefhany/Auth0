@@ -1,7 +1,7 @@
 ---
 title: "JSON Web Token (JWT)"
 description: ""
-lead: "O JSON Web Token é um código em Base64 que armazena objetos JSON com as informações de autenticação (id token) e autorização (token de acesso)."
+lead: ""
 draft: false
 toc: true
 images: []
@@ -11,7 +11,9 @@ menu:
 weight: 3
 ---
 
-Por utilizar o JSON teremos um token pequeno, mais fácil de assinar e a aplicação conseguirá realizar uma análise com maior facilidade.
+O JSON Web Token é um código em Base64 que armazena objetos JSON com as informações de autenticação (id token) e autorização (token de acesso).
+
+Por utilizar o JSON teremos um token pequeno e mais fácil de assinar. Além disso, a aplicação terá uma maior facilidade para realizar uma análise do token.
 
 É possível decodificar o token atráves do site [jwt.io](https://jwt.io/).
 
@@ -59,4 +61,4 @@ Contém as informações do usuário, podendo ser informações pessoais (id tok
 
 Contém a assinatura única do token que é utilizado para verificar o remetente e garantir que o conteúdo é legítimo.
 
-A sua geração é feita a partir de um algoritmo de criptografia e tem seu corpo com base no **header**, no **payload** e no **segredo-chave** definido pela aplicação. Portanto, para verificar se o token é válido precisamos ter em posse o segredo-chave e através dele geramos uma assinatura com o header e payload, e comparamos com a assinatura presente no token.
+A sua geração é feita a partir de um algoritmo de criptografia e seus dados são gerados com base no **header**, **payload** e **segredo-chave** definido pela aplicação. Portanto, para verificar se o token é válido precisamos ter em posse o segredo-chave. Através do segredo-chave, geramos uma assinatura com o header + payload e comparamos com a assinatura presente no token.

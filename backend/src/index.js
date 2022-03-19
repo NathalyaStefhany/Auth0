@@ -70,17 +70,21 @@ app.post("/book", checkRole("admin"), (request, response) => {
   return response.status(201).send();
 });
 
-app.delete("/book/:id", (request, response) => {
-  const { id } = request.params;
+app.delete(
+  "/book/:id",
+  checkScope(["delete:book"], { customScopeKey }),
+  (request, response) => {
+    const { id } = request.params;
 
-  const bookExists = books.find((book) => book.id === id);
+    const bookExists = books.find((book) => book.id === id);
 
-  if (!bookExists)
-    return response.status(400).json({ error: "Book not exists!" });
+    if (!bookExists)
+      return response.status(400).json({ error: "Book not exists!" });
 
-  books = books.filter((book) => book.id !== id);
+    books = books.filter((book) => book.id !== id);
 
-  return response.send();
-});
+    return response.send();
+  }
+);
 
 app.listen(4000);

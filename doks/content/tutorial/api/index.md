@@ -10,7 +10,7 @@ menu:
     parent: "tutorial"
 ---
 
-Para o tutorial, será desenvolvido uma API para que a aplicação criada à consuma.
+Para o tutorial, será desenvolvido uma API para a aplicação.
 
 Na api teremos 3 endpoints:
 
@@ -48,7 +48,7 @@ Criado uma role, seremos redirecionados para as configurações. Nas configuraç
 
 ![Image](add-permission.png "Adicionando os escopos/permissões")
 
-Para atribuir as **_roles_** no usuário, podemos ir na aba **_Users_** ou ir no usuário que deseja adicionar uma **_role_** e ir na aba **_Roles_**.
+Para atribuir as **_roles_** no usuário, podemos ir na aba **_Users_** da própria role ou ir no usuário (User Management -> Users) que deseja adicionar a **_role_** e ir na aba **_Roles_**.
 
 ### Adicionando Roles e Escopos no Token de Acesso
 
@@ -74,7 +74,7 @@ Para a api utilizaremos o framework express e as bibliotecas/middlewares:
 
 ### Validando o token de acesso
 
-Para verificar se o token de acesso é válido podemos utilizar um middleware. O middleware é uma função que fica entre a requisição e a resposta da nossa API, ou seja, quando fizermos uma requisição, antes de começar a lógica do endpoint, será verificado se o token é válido, se for continua a execução da requisição, se não é retornado o erro 401 - Sem autorização para o caso da validação de token.
+Para verificar se o token de acesso é válido podemos utilizar um middleware. O middleware é uma função que fica entre a requisição e a resposta da nossa API, ou seja, quando fizermos uma requisição, antes de começar a lógica do endpoint, será verificado se o token é válido, se for continua a execução da requisição, se não é retornado o erro 401 (sem autorização) para o caso da validação de token.
 
 Para a validação do token, temos o middleware **_jwtCheck_** e como a validação ocorrerá em todos os endpoints, podemos configura-lo com `app.use(middleware)`
 
@@ -154,7 +154,7 @@ app.listen(4000);
 
 ### Auth0Provider
 
-Para a aplicação conseguir fazer uma requisição, a aplicação precisa mandar um token de acesso para a API que irá dizer que o usuário tem autorização. Para isso, precisamos passar no Auth0Provider mais um parâmetro, o audience:
+Para a aplicação conseguir fazer uma requisição, a aplicação precisa mandar um token de acesso para a API que irá dizer que o usuário tem autorização. Para isso, precisamos passar no Auth0Provider mais um parâmetro, o audience (identificador da API):
 
 ```js
 // components/Auth0Provider/index.tsx
@@ -251,7 +251,7 @@ useEffect(() => {
 
 ## Verificando permissões
 
-Atualmente, qualquer usuário pode fazer requisição a todos os endpoints da API pois só verificamos o token de acesso, porém devemos também analisar as permissões do usuário para verificar se pode ou não fazer a requisição.
+Atualmente, qualquer usuário autenticado pode fazer requisição em todos os endpoints da API pois só verificamos o token de acesso, porém devemos também analisar as permissões do usuário para verificar se pode ou não fazer a requisição.
 
 ### Escopos
 
@@ -306,7 +306,7 @@ app.delete(
 
 ### App metadata
 
-Outra maneira para verificar se tem permissão para executar o endpoint é através do app_metadata. Anteriormente, haviamos adicionado no app_metadata o tipo do usuário (admin ou client) para verificar quais abas os usuários conseguem acessar ([clique aqui](https://doks-auth0.netlify.app/tutorial/aplicacao/#app-metadata)). Se adicionarmos o app_metadata no token de acesso, podemos pegar o valor de roles e verificar se o usuário tem ou não permissão.
+Outra maneira para verificar se tem permissão para executar o endpoint é através do app*metadata. Anteriormente, haviamos adicionado no app_metadata o tipo do usuário (admin ou client) para verificar quais abas os usuários conseguem acessar ([clique aqui](https://doks-auth0.netlify.app/tutorial/aplicacao/#app-metadata)). Se adicionarmos o app_metadata no token de acesso, podemos pegar o valor de \*\*\_role*\*\* e verificar se o usuário tem ou não permissão.
 
 Para isso, primeiro devemos adicionar uma regra para colocar a informação dentro do token de acesso:
 
@@ -379,7 +379,51 @@ app.post("/book", checkRole("admin"), (request, response) => {
   return response.status(201).json(book);
 });
 
-app.delete("/book/:id", (request, response) => {
-  // Lógica do endpoint
-});
+app.delete(
+  "/book/:id",
+  checkScope(["delete:book"], { customScopeKey }),
+  (request, response) => {
+    // Lógica do endpoint
+  }
+);
 ```
+
+Com isso, a nossa API já está pronta!
+
+## Fazendo requisições no Postman
+
+Para realizar as requisições no postman, precisamos pegar o token de alguma forma e para isso temos duas opções: fazer o login na aplicação e pegar o token pela ferramenta de desenvolver do navegador ou utilizando uma aplicação **_Machine to Machine_** do Auth0 (a aplicação é criada automaticamente quando criamos a API).
+
+A utilização de uma aplicação Machine to Machine se deve ao fato dela ser uma aplicação confidencial ([Aplicações Confidenciais e Públicas](https://doks-auth0.netlify.app/documentacao/aplicacoes/#aplica%C3%A7%C3%B5es-confidenciais-e-p%C3%BAblicas))
+
+Se formos na nossa API do Auth0, veremos duas abas:
+
+- **Machine to Machine Applications:** é definido quais aplicações **_machine to machine_** poderão solicitar o token de acesso da API.
+
+- **Test:** é mostrado a requisição que precisamos fazer para pegar o token de acesso.
+
+Portanto, se definirmos as aplicações que poderão solicitar o token, teremos a requisição na aba **Test**. Informações da requisição:
+
+- **Método:** POST
+
+- **URL:** domínio do seu Auth0
+
+- **Endpoint:** /oauth/token
+
+- **Parâmetro (body - JSON):** _client_id_ e _client_secret_ da aplicação machine to machine, audience da API e grant_type = client_credentials (é o tipo de método que utilizaremos para pegar o token)
+
+- **Retorno:** token de acesso, tipo do token (Bearer) e tempo de duração
+
+Se fizermos a requisição e decodificarmos o token resultante, veremos que nele não tem os escopos da API, portanto, não conseguimos fazer as requisições nos endpoints já que cada um deles depende de um escopo. Para arrumar isso podemos ir na nossa aplicação machine to machine e configurar os escopos que teremos:
+
+{{<alert icon="⚠️" text="As aplicações machine to machine aceitam apenas escopo, portanto, caso o endpoint utilize uma role para verificar se o usuário tem permissão para acessar o endpoint, é necessário realizar uma lógica para verificar por role e escopo na API!" />}}
+
+![Image](machine-to-machine-scopes.png "Configurando os escopos na aplicação")
+
+Feito essa configuração, se fizermos a requisição do token novamente conseguiremos ver também o retorno dos escopos (os mesmos estão presente dentro do token) e realizar as requisições na nossa API.
+
+Para realizar as requisições precisaremos passar o token de acesso. No postman temos a aba **_Authorization_** no qual podemos definir o tipo do token no lado esquerdo e adicionar seu valor no lado direito.
+
+![Image](request.png "Requisição do endpoint de listar livros")
+
+Feito isso, já conseguimos fazer as requisições através de uma API Client!

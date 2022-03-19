@@ -30,15 +30,15 @@ Quando clicado em uma aplicação, somos redirecionados para as configurações 
 
 Nas configurações algumas informações são importantes para sua aplicação:
 
-| **Configuração**       | **Descrição**                                                                                                                                                                             |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Domain                 | Nome do domínio de autenticação                                                                                                                                                           |
-| Client ID              | Identificador da aplicação                                                                                                                                                                |
-| Client Secret          | Protege os recursos concedendo tokens apenas a usuários autorizados. Ele não deve ser compartilhado com ninguém, pois a pessoa poderá emitir tokens e acessar recursos não autorizados!   |
-| Allowed Callback URLs  | Quando o usuário fizer o login, ele poderá ser redirecionada para alguma das URLs definidas                                                                                               |
-| Allowed Logout URLs    | Quando o usuário fizer o logout, ele poderá ser redirecionada para alguma das URLs definidas                                                                                              |
-| Allowed Web Origins    | Indica quais URLs tem a permissão de solicitar a autenticação                                                                                                                             |
-| Allowed Origins (CORS) | Conjunto de URLs que terão permissão para fazer solicitações de JavaScript para API Auth0 (normalmente usado com CORS). Por padrão todas as URLs em allowed callback URLs tem a permissão |
+| **Configuração**       | **Descrição**                                                                                                                                                                                  |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Domain                 | Nome do domínio de autenticação                                                                                                                                                                |
+| Client ID              | Identificador da aplicação                                                                                                                                                                     |
+| Client Secret          | Protege os recursos concedendo tokens apenas a usuários autorizados. Ele não deve ser compartilhado com ninguém, pois a pessoa poderá emitir tokens e acessar recursos não autorizados!        |
+| Allowed Callback URLs  | Quando o usuário fizer o login, ele poderá ser redirecionada para alguma das URLs definidas                                                                                                    |
+| Allowed Logout URLs    | Quando o usuário fizer o logout, ele poderá ser redirecionada para alguma das URLs definidas                                                                                                   |
+| Allowed Web Origins    | Indica quais URLs tem a permissão de solicitar a autenticação                                                                                                                                  |
+| Allowed Origins (CORS) | Conjunto de URLs que terão permissão para fazer solicitações de JavaScript para a API do Auth0 (normalmente usado com CORS). Por padrão todas as URLs em allowed callback URLs tem a permissão |
 
 ### Fluxo de Autenticação e Autorização
 
@@ -58,7 +58,7 @@ Se a aplicação não precisar de um token de acesso, podemos utilizar o **_Impl
 
 #### Com token de acesso
 
-Se a aplicação não precisar de um token de acesso, podemos utilizar o **_Authorization Code Flow with Proof Key for Code Exchange (Fluxo de código de autorização com chave de prova para troca de código)_**:
+Se a aplicação precisar de um token de acesso, podemos utilizar o **_Authorization Code Flow with Proof Key for Code Exchange (Fluxo de código de autorização com chave de prova para troca de código)_**:
 
 1. O usuário clica em _Login_
 2. O SDK do Auth0 cria um arquivo criptografado aleatório _code_verifier_ e, a partir disso, gera um arquivo _code_challenge_
@@ -68,7 +68,7 @@ Se a aplicação não precisar de um token de acesso, podemos utilizar o **_Auth
 6. O servidor de autorização do Auth0 armazena o _code_challenge_ e redireciona o usuário de volta para o aplicativo com um código de autorização
 7. O SDK do Auth0 envia o código e o _code_verifier_ para o servidor de autorização do Auth0 pelo endpoint `/oauth/token`
 8. O servidor verifica o _code_challenge_ e o _code_verifier_
-9. O servidor redireciona o usuário de volta a aplicação com um [ID token](https://doks-auth0.netlify.app/documentacao/autenticacao/#id-token) e um [token de acesso](https://doks-auth0.netlify.app/documentacao/autorizacao/#token-de-acessp)
+9. O servidor retorna um [ID token](https://doks-auth0.netlify.app/documentacao/autenticacao/#id-token) e um [token de acesso](https://doks-auth0.netlify.app/documentacao/autorizacao/#token-de-acesso)
 
 ## Aplicações Confidenciais e Públicas
 
@@ -78,7 +78,7 @@ Uma aplicação confidencial utiliza um servidor back-end confiável e, conseque
 
 Uma aplicação pública, só pode utilizar os tipos de autenticação que não precisam do **client secret** porque são aplicações que não podem manter a confialidade das credenciais exigidas.
 
-{{<alert text="Se uma aplicação React realizasse uma requisição no endpoint POST https://YOUR_DOMAIN/oauth/token no qual é passado como parâmetro o client id e client secret para gerar o token de acesso, qualquer usuário que acessasse as ferramentas do desenvolvedor do navegador poderia ver a requisição com os parâmetros enviados, sendo um deles o valor do client secret que é uma chave privada que ninguém deve ter acesso. Além disso, toda o código da aplicação está disponível para o navegardor."/>}}
+{{<alert text="Se uma aplicação React realizasse uma requisição no endpoint POST https://YOUR_DOMAIN/oauth/token no qual é passado como parâmetro o client id e client secret para gerar o token de acesso, qualquer usuário que acessasse as ferramentas do desenvolvedor do navegador poderia ver a requisição com os parâmetros enviados, sendo um deles o valor do client secret que é uma chave privada que ninguém deve ter acesso. Além disso, todo o código da aplicação está disponível para o navegardor."/>}}
 
 Para verificar se o aplicativo é público ou confidencial, você pode ir em <span style="color:#5853ed">Applications -> Applications</span> e selecionar a aplicação que deseja. Feito isso, em configurações temos o campo _Token Endpoint Authentication Method_ e nele temos 3 tipos de métodos:
 
@@ -97,11 +97,11 @@ Esses valores irão definir se são aplicativos públicos ou confidenciais:
 
 ## Consentimento do Usuário
 
-Se um usuário se autenticar por meio de um aplicativo de terceiros e o aplicativo solicitar autorização para acessar as informações do usuário ou realizar alguma ação em uma API em seu nome, será mostrado uma caixa de diálogo de consentimento no seu primeiro login ou se o consentimento for revogado explicitamente.
+Se um usuário se autenticar por meio de um aplicativo de terceiros e a aplicação solicitar autorização para acessar as informações do usuário ou realizar alguma ação em uma API em seu nome, será mostrado uma caixa de diálogo de consentimento no seu primeiro login ou se o consentimento for revogado explicitamente.
 
-Por padrão, a página de consentimento usará os nomes dos escopos para solicitar o consentimento do usuário, porém se quiser mostrar a descrição também basta definir `use_scope_descriptions_for_consent` como **true**.
+Por padrão, a página de consentimento usará os nomes dos escopos para solicitar o consentimento do usuário.
 
-Caso o usuário rejeite o consentimento da aplicação, ele será redirecionado para o **redirect_uri** especificado na solicitação com o erro `access_denied`.
+Caso o usuário rejeite o consentimento da aplicação, ele será redirecionado para a página inicial da aplicação com o erro `access_denied`.
 
 ### Ignorar Consentimento
 

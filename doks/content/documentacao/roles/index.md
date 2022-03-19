@@ -24,8 +24,8 @@ Digamos que você está construindo uma aplicação de loja virtual e define doi
 Para fazer isso, você cria 4 escopos para a sua API:
 
 - `create: product` -> autoriza a criação dos produtos
-- `edit: product` -> autoriza a editação dos produtos
-- `delete: product` -> autoriza a deletação dos produtos
+- `edit: product` -> autoriza a edição dos produtos
+- `delete: product` -> autoriza a deleção dos produtos
 - `read: product` -> autoriza a visualização dos produtos
 
 Para o usuário administrador, foi atribuido os escopos `create: product`, `edit: product`, `delete: product` e `read: product`. Para o usuário cliente, foi atribuido o escopo `read: product`.
@@ -34,8 +34,8 @@ Nesse exemplo, os usuários administrador e cliente são as _roles_ e para cada 
 
 Se não tivessemos as _roles_, algumas coisas poderiam acontecer:
 
-- Para cada usuário que criasse, seria necessário gerenciar cada um deles individualmente adicionando todos os _scopes_ necessários. No exemplo, temos uma quantidade pequena de escopo e funções, porém, se aumentasse, quando fosse definir as permissões do usuário, poderia esquecer de adicionar algum ou adicionar um que não era para ter. Portanto, os papéis/funções do usuário facilitam a atribuição das permissões para cada usuário pois só iremos dizer que o usuário é um administrador, por exemplo, e no administrador já terá todas as permissões necessárias.
+- Para cada usuário que criasse, seria necessário gerenciar cada um deles individualmente adicionando todos os _scopes_ necessários. No exemplo, temos uma quantidade pequena de escopo, porém, se aumentasse, quando fosse definir as permissões do usuário, poderia esquecer de adicionar algum ou adicionar um que não era para ter. Portanto, os papéis/funções do usuário facilitam a atribuição das permissões para cada usuário pois só iremos dizer que o usuário é um administrador, por exemplo, e no administrador já terá todas as permissões necessárias.
 
 - Todos os _scopes_ são enviados pelo token de acesso, portanto, se tivermos muitos _scopes_ por usuário, o JWT vai ficar grande e lento. Com uma simples _role_ isso não vai acontecer, pois a _role_ pode encapsular uma longa lista de permissões.
 
-- Se precisar remover uma permissão de todos os usuários do tipo **cliente** sem ter definido as funções de cada usuário vai ser demorado pois vai ter que fazer esse processo de um em um. Com as _roles_, você altera a permissão em um lugar só.
+- Se precisar remover uma permissão de todos os usuários do tipo **cliente**, sem ter definido as _roles_, vai ser demorado pois vai ter que fazer esse processo em todos os usuários de um em um. Com as _roles_, você altera a permissão em um lugar só.

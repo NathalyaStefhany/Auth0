@@ -41,13 +41,13 @@ O token de acesso, normalmente gerado no formato [JWT]({{< relref "documentacao/
 
 No token, teremos duas informações importantes:
 
-- **Escopo:** define as ações específicas que as aplicações podem realizar no nome do usuário, ou seja, se fizer o login pelo Facebook, a aplicação poderá acessar as informações do perfil no nome do usuário mas o usuário precisa, antes, permitir esse acesso.
+- **Escopo:** define as ações específicas que as aplicações podem realizar no nome do usuário, ou seja, se fizer o login pelo Facebook, a aplicação poderá acessar as informações do perfil se o usuário der permissão.
 
-- **Permissão:** define as ações que podem ser executadas em um recurso. Voltando ao exemplo da loja virtual, teriamos um recurso **produto** e nele podemos tomar as ações de editar, ler, deletar e adicionar. No token de acesso do administrador, nas permissões teremos todas ações, enquanto no lado do usuário teriamos apenas a permissão de ler.
+- **Permissão:** define as ações que podem ser executadas em um recurso. Voltando ao exemplo da loja virtual, teriamos um recurso **produto** e nele podemos tomar as ações de editar, ler, deletar e adicionar. Portanto, no token de acesso do administrador teremos todas as permissões, enquanto no lado do usuário teriamos apenas a de ler.
 
 Em [jwt.io - token de acesso](https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwOi8vbXktZG9tYWluLmF1dGgwLmNvbSIsInN1YiI6ImF1dGgwfDEyMzQ1NiIsImF1ZCI6IjEyMzRhYmNkZWYiLCJleHAiOjEzMTEyODE5NzAsImlhdCI6MTMxMTI4MDk3MCwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInBlcm1pc3Npb25zIjpbInJlYWQ6cHJvZHVjdCJdfQ.nyFWF8hPPkJpQoZfim0z73bPJ2119kXH723UEofbDPw) temos um token de acesso sendo decodificado no debugger e nele é possível retirar as seguintes informações:
 
-- **Scope:** a aplicação terá acesso ao perfil e e-mail.
+- **Scope:** a aplicação terá acesso ao perfil e e-mail do usuário.
 
 - **Permissions:** o usuário poderá visualizar os produtos.
 

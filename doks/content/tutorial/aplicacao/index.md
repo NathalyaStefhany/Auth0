@@ -11,19 +11,19 @@ menu:
 weight: 1
 ---
 
-Para o tutorial, será desenvolvido uma aplicação de loja de livros no qual teremos dois tipos de acesso: cliente e administrador.
+Para o tutorial, será desenvolvido uma aplicação em React de loja de livros no qual teremos dois tipos de acesso: cliente e administrador.
 
 Os administradores poderão adicionar, deletar e visualizar livros, enquanto os clientes poderão apenas visualizar os livros.
 
-Pensando nisso, na parte do desenvolvimento da aplicação teremos as seguintes abas para o administrador: home, perfil, editar livro e visualizar livro. E para o usuário teremos: home, perfil e visualizar livro. Não é necessário fazer login para visualizar a aba **home**.
+Pensando nisso, na parte do desenvolvimento da aplicação teremos as seguintes abas para o administrador: home, perfil, adicionar/deletar livro e visualizar livro. E para o usuário teremos: home, perfil e visualizar livro. Não é necessário fazer login para visualizar a aba **home**.
 
-No Auth0 teremos:
+Para isso teremos:
 
 - **Escopos:** `read:book`, `create:book`, `delete:book`, `openid profile email`
 - **Roles:** administrador e cliente
-- **App Metadata:** qual tipo de acesso o usuário tem
+- **App Metadata:** qual tipo de acesso o usuário tem (admin ou client)
 
-O código da aplicação que será desenvolvida nesse tutorial está disponível no repositório [Auth0](https://github.com/NathalyaStefhany/Auth0)
+O código da aplicação que será desenvolvida nesse tutorial está disponível no repositório [Auth0](https://github.com/NathalyaStefhany/Auth0).
 
 Para começar com o tutorial, certifique-se que tenha uma conta no [Auth0](https://auth0.com/signup?place=header&type=button&text=sign%20up).
 
@@ -47,9 +47,9 @@ Em **_Application Properties_** é possível alterar a logo da aplicação.
 
 Em **_Application URIs_** vai ser definido as URLs que o usuário vai ser redirecionado quando fizer login/logout e quais URLs poderão ter acesso a essa aplicação:
 
-- **_Allowed Callback URLs:_** quando o usuário (admin e cliente) for autenticado, será redirecionado para a aba **Livros**, url: http://localhost:3000/livros
-- **_Allowed Logout URLs:_** quando o usuário fizer o logout, será redirecionado para a página **Home**, url: http://localhost:3000
-- **_Allowed Web Origins:_** apenas o localhost (pois está em desenvolvimento) poderá acessar essa aplicação, url: http://localhost:3000
+- **_Allowed Callback URLs:_** quando o usuário (admin e cliente) for autenticado, será redirecionado para a aba **Livros** (url: http://localhost:3000/livros)
+- **_Allowed Logout URLs:_** quando o usuário fizer o logout, será redirecionado para a página **Home** (url: http://localhost:3000)
+- **_Allowed Web Origins:_** apenas o localhost (pois está em desenvolvimento) poderá acessar essa aplicação (url: http://localhost:3000)
 
 ![Image](application-uris.png "Definição das URLs")
 
@@ -116,11 +116,11 @@ As informações referentes ao _domain_, _clientId_ e _redirectUri_ podem ser en
 
 ![Image](provider-info.png "Informações do Auth0")
 
-O _cacheLocation_ irá informar onde será armazenado os tokens de acesso. Ele é utilizado pelo time de teste, portanto, quando a aplicação estiver em dev, o token é armazenado no localstorage e o time de teste consegue acessar. Quando estiver em prod, fica na memória.
+O _cacheLocation_ irá informar onde será armazenado os tokens. O time de teste precisa do token para realizar os testes da aplicação, portanto, quando a aplicação estiver em dev, o token é armazenado no localstorage para conseguirmos pegar seu valor. Quando estiver em prod, fica na memória.
 
 O _scope_ irá permite que tenhamos acesso ao perfil e e-mail do usuário.
 
-Implementado o Auth0Provider, devemos adicioná-lo em volta de toda a nossa aplicação para que consigamos ter o seu acesso em todas as páginas:
+Implementado o Auth0Provider, devemos adicioná-lo em volta de toda a nossa aplicação:
 
 ```js
 // index.tsx
@@ -156,7 +156,7 @@ export const App = () => {
 };
 ```
 
-Com essa função, quando o usuário fizer o login, ele vai ser redirecionado para a URL que colocamos no parâmetro _redirectUri_ do [_Auth0Provider_](http://localhost:1313/tutorial/aplicacoes/#configurando-o-auth0-provider).
+Com essa função, quando o usuário fizer o login, ele vai ser redirecionado para a URL que colocamos no parâmetro _redirectUri_ do [_Auth0Provider_](https://doks-auth0.netlify.app/tutorial/aplicacao/#auth0-provider).
 
 ### Opções de Login
 
@@ -164,7 +164,7 @@ Com a aplicação pronta para realizar o login, precisamos agora configurar os t
 
 #### Banco de Dados
 
-O primeiro passo a se fazer é a criar um novo banco para a aplicação:
+O primeiro passo a se fazer é criar um novo banco para a aplicação:
 
 ![Image](create-database.png "Criando o banco de dados")
 
@@ -196,11 +196,11 @@ No Auth0, já temos como padrão a conexão do Google, porém podemos criar nova
 
 ![Image](create-social.png "Criando uma nova conexão a partir de uma rede social")
 
-No nosso caso, utilizaremos o Google como segunda opção de autenticação. Quando clicamos na conexão, teremos duas abas:
+No nosso caso, utilizaremos o Google como segunda opção de autenticação. Quando clicamos na rede social, teremos duas abas:
 
 - **_Settings:_** define quais permissões iremos pedir para o usuário para acessarmos alguns dados importantes da conta. Para a nossa aplicação, precisaremos apenas das informações básicas do perfil.
 
-- **_Applications:_** defique quais aplicação utilizarão a conexão.
+- **_Applications:_** define quais aplicações utilizarão a conexão.
 
 ### Logout
 
@@ -226,7 +226,7 @@ export const App = () => {
 };
 ```
 
-No `logout()` devemos passar como parâmetro a URL que o Auth0 irá utilizar para redirencionar o usuário depois que fizer o logout. Essa URL deve estar presente no campo **_Allowed Logout URLs_** da aplicação no Auth0 ([Configurando a aplicação no Auth0](http://localhost:1313/tutorial/aplicacoes/#configurando-a-aplica%c3%a7%c3%a3o-no-auth0)).
+No `logout()` devemos passar como parâmetro a URL que o Auth0 irá utilizar para redirencionar o usuário depois que fizer o logout. Essa URL deve estar presente no campo **_Allowed Logout URLs_** da aplicação no Auth0 ([Configurando a aplicação](https://doks-auth0.netlify.app/tutorial/aplicacao/#configurando-a-aplica%c3%a7%c3%a3o)).
 
 ### Verificar se o usuário está autenticado
 
@@ -238,7 +238,7 @@ import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 export const App = () => {
-  const { loginWithRedirect, logout } = useAuth0();
+  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
   return (
     <>
@@ -397,8 +397,8 @@ function addAppMetadataToIdToken(user, context, callback) {
 
 As regras são funções JavaScript que contém dois parâmetros importantes:
 
-- **_user:_** contém informações relacionado ao usuário ([Informações presente no user](https://auth0.com/documentacao/customize/rules/user-object-in-rules))
-- **_context_**: contém informações relacionado a aplicação ([Informações presente no context](https://auth0.com/documentacao/customize/rules/context-object))
+- **_user:_** contém informações relacionado ao usuário ([Informações presente no user](https://auth0.com/docs/customize/rules/user-object-in-rules))
+- **_context_**: contém informações relacionado a aplicação ([Informações presente no context](https://auth0.com/docs/customize/rules/context-object))
 
 Com o parâmetro _context_ conseguimos verificar qual aplicação está executando a regra (_clientName_) e, através disso, definir se é para continuar com a execução ou não. Isso porque as regras são executadas em todas as aplicações que temos no Auth0 depois da autenticação do usuário.
 
@@ -442,13 +442,13 @@ Agora, temos duas regras: uma para adicionar os valores do app_metadata no id to
 Para confirmarmos que a regra está funcionando corretamente, podemos realizar o login na nossa aplicação e ir nas ferramentas para desenvolvedor do navegador (F12). Em "aplicativo" teremos os dados armazenado localmente, sendo um deles o do Auth0. Se clicarmos, conseguiremos ver duas informações:
 
 - **_decoded_token:_** temos o id token decodificado e com isso conseguimos ver as informações presente nele.
-- **_id_token:_** temos o id token ainda condificado. Caso queira decodificar, adicione o token no debugger do [jwt.io](https://jwt.io/).
+- **_id_token:_** temos o id token ainda codificado. Caso queira decodificar, adicione o token no debugger do [jwt.io](https://jwt.io/).
 
 ![Image](id-token.png "Ferramentas para desenvolvedor")
 
 ### Definindo quando mostrar a aba Editar
 
-Adicionado o tipo de usuário pelo **_app_metadata_**, iremos agora pegar essa informação na aplicação para verificar se deve ou não mostrar a aba Editar. Para isso temos o parâmetro **user** que retorna um objeto com todas as informações do id token.
+Adicionado o tipo de usuário pelo **_app_metadata_**, iremos agora pegar essa informação na aplicação para verificar se deve ou não mostrar a aba Editar. Para isso temos o parâmetro **user** na biblioteca do Auth0 que retorna um objeto com todas as informações do id token.
 
 ```js
 // components/Layout/Header/index.tsx
@@ -544,3 +544,7 @@ export const Profile = () => {
 ```
 
 Atualmente, temos poucas informações, mas caso queira adicionar mais podemos requisitar essas informações pelo **_scope_** definido no **_Auth0Provider_**.
+
+## Criando uma API para o front-end
+
+No tutorial da [API](https://doks-auth0.netlify.app/tutorial/api/) é mostrado como criar endpoints com permissões/escopos do usuário e fazer requisições no lado do front-end e em uma API Client.
