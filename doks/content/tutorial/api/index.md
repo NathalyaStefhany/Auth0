@@ -306,7 +306,7 @@ app.delete(
 
 ### App metadata
 
-Outra maneira para verificar se tem permissão para executar o endpoint é através do app*metadata. Anteriormente, haviamos adicionado no app_metadata o tipo do usuário (admin ou client) para verificar quais abas os usuários conseguem acessar ([clique aqui](https://doks-auth0.netlify.app/tutorial/aplicacao/#app-metadata)). Se adicionarmos o app_metadata no token de acesso, podemos pegar o valor de \*\*\_role*\*\* e verificar se o usuário tem ou não permissão.
+Outra maneira para verificar se tem permissão para executar o endpoint é através do _app_metadata_. Anteriormente, haviamos adicionado nele o tipo do usuário (admin ou client) para verificar quais abas os usuários conseguem acessar ([clique aqui](https://doks-auth0.netlify.app/tutorial/aplicacao/#app-metadata)). Se adicionarmos o app metadata no token de acesso, podemos pegar o valor de **_role_** e verificar se o usuário tem ou não permissão.
 
 Para isso, primeiro devemos adicionar uma regra para colocar a informação dentro do token de acesso:
 
