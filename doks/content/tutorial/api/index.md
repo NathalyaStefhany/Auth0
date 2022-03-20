@@ -392,9 +392,7 @@ Com isso, a nossa API já está pronta!
 
 ## Fazendo requisições no Postman
 
-Para realizar as requisições no postman, precisamos pegar o token de alguma forma e para isso temos duas opções: fazer o login na aplicação e pegar o token pela ferramenta de desenvolver do navegador ou utilizando uma aplicação **_Machine to Machine_** do Auth0 (a aplicação é criada automaticamente quando criamos a API).
-
-A utilização de uma aplicação Machine to Machine se deve ao fato dela ser uma aplicação confidencial ([Aplicações Confidenciais e Públicas](https://doks-auth0.netlify.app/documentacao/aplicacoes/#aplica%C3%A7%C3%B5es-confidenciais-e-p%C3%BAblicas))
+Para realizar as requisições no postman, precisamos ter o token de acesso e para pegarmos temos algumas opções, entre elas temos a de fazer o login na aplicação e pegar o token pela ferramenta de desenvolver do navegador ou utilizar uma aplicação **_Machine to Machine_** do Auth0 (a aplicação é criada automaticamente quando criamos a API). Nesse caso iremos utilizar a aplicação **_Machine to Machine_**.
 
 Se formos na nossa API do Auth0, veremos duas abas:
 
